@@ -1,9 +1,28 @@
-label {
-    display: inline-block;
-    width: 3em;
-    margin: .5em 0;
-    color: #607D8B;
-    font-weight: bold;
+fieldset {
+    width: 30%;
+    border-radius: 25%;
+    background-color: aliceblue;
+}
+
+legend {
+    text-align: center;
+    font-size: 2em;
+    color: darkslateblue;
+}
+
+.field {
+    width: 80%;
+    padding-left: 10%;
+}
+
+section {
+    margin-left: 60%;
+}
+
+button {
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5%;
 }
 
 input {
@@ -12,22 +31,6 @@ input {
     padding-left: .4em;
 }
 
-button {
-    margin-top: 20px;
-    font-family: Arial;
-    background-color: #eee;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
 button:hover {
     background-color: #cfd8dc;
-}
-
-button:disabled {
-    background-color: #eee;
-    color: #ccc;
-    cursor: auto;
 }

@@ -1,14 +1,25 @@
 <div *ngIf="!hero else condition">
-    LOADING...
+    <mat-spinner></mat-spinner>
 </div>
 <ng-template #condition> 
-    <h2> {{hero.name | uppercase}} </h2>
-    <div><span>id: </span> {{hero._id}} </div>
-    <div>
-        <label>name:
-            <input [(ngModel)]="hero.name" placeholder="name"/>
-        </label>
-    </div>
-    <button (click)="goBack()">Go back</button>
-    <button (click)="save()">Save</button>
+    <fieldset>
+        <legend>{{hero.name | uppercase}} Details</legend>
+        <mat-form-field appearance="standard" class="field">
+            <mat-label>id:</mat-label>
+            <input matInput readonly [formControl]="heroIdControl">
+        </mat-form-field>
+        <mat-form-field appearence="standard" class="field">
+            <mat-label>name:</mat-label>
+            <input matInput type="text" [formControl]="heroNameControl">
+            <mat-error *ngIf="heroNameControl.invalid">Name cannot be empty!</mat-error>
+        </mat-form-field>
+        <section>
+            <button (click)="save()" mat-mini-fab color="primary" aria-label="Done icon button">
+                <mat-icon>done_outline</mat-icon>
+            </button>
+            <button (click)="goBack()" mat-mini-fab color="warn" aria-label="Exit icon button">
+                <mat-icon>exit_to_app</mat-icon>
+            </button>
+        </section>
+    </fieldset>
 </ng-template>

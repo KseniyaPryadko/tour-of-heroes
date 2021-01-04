@@ -1,12 +1,7 @@
-h1 {
-    font-size: 1.2em;
-    margin-bottom: 0;
-}
-
-h2 {
+.title {
     font-size: 2em;
-    margin-top: 0;
-    padding-top: 0;
+    margin-bottom: 0;
+    color: #039be5;
 }
 
 nav a {
