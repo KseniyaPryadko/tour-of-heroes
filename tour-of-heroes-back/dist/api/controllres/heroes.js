@@ -27,7 +27,7 @@ module.exports = {
         });
     },
     insert: (req, res, _) => {
-        model.create({ name: req.body.name }, (err, hero) => {
+        model.create({ name: req.body.name, age: req.body.age, class: req.body.class }, (err, hero) => {
             if (err) {
                 res.status(400).json(err);
             }
@@ -43,6 +43,8 @@ module.exports = {
             }
             else if (hero) {
                 hero.name = req.body.name;
+                hero.age = req.body.age;
+                hero.class = req.body.class;
                 hero.save((nestedErr, newHero) => {
                     if (nestedErr) {
                         res.status(409).json(nestedErr);

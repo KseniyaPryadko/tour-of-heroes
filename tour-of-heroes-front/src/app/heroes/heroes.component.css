@@ -39,3 +39,13 @@ a:hover {
 button:hover {
     background-color: #cfd8dc;
 }
+
+.table {
+    margin-top: 1%;
+}
+
+th {
+    font-size: 2em;
+    color: #405061;
+    vertical-align: middle;
+}

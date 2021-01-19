@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Remove hero</h1>
 <div mat-dialog-content>
     <p>Are you sure you want remove {{data.name}}?</p>
-    <button mat-button (click)="onNoClick()">No, it's a terrible mistake</button>
+    <button mat-button mat-dialog-close>No, it's a terrible mistake</button>
     <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Yes, {{data.name}} is useless</button>
 </div>

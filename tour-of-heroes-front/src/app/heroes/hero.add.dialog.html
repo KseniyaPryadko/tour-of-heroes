@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Add hero</h1>
+<div mat-dialog-content>
+    <mat-form-field appearence="standard" class="field">
+        <mat-label>name:</mat-label>
+        <input matInput type="text" [formControl]="newNameControl">
+        <mat-error *ngIf="newNameControl.invalid">Name cannot be empty and must consist of letters only!</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="standard" class="field">
+        <mat-label>age:</mat-label>
+        <input matInput type="number" min="1" [formControl]="newAgeControl">
+        <mat-error *ngIf="newAgeControl.invalid">Age cannot be empty!</mat-error>
+    </mat-form-field>
+    <mat-form-field appearence="standard" class="field">
+        <mat-label>class:</mat-label>
+        <mat-select [formControl]="newClassControl">
+            <mat-option value="Junior">Junior</mat-option>
+            <mat-option value="Middle">Middle</mat-option>
+            <mat-option value="Senior">Senior</mat-option>
+        </mat-select>
+        <mat-error *ngIf="newClassControl.invalid">Class cannot be empty!</mat-error>
+    </mat-form-field>
+</div>
+<section mat-dialog-actions>
+    <button [disabled]="isInvalid()" [mat-dialog-close]="data()" mat-mini-fab color="primary" aria-label="Done icon button">
+        <mat-icon>done_outline</mat-icon>
+    </button>
+    <button mat-dialog-close mat-mini-fab color="warn" aria-label="Exit icon button">
+        <mat-icon>exit_to_app</mat-icon>
+    </button>
+</section>

@@ -14,9 +14,11 @@ import { HeroService } from '../hero.service';
 export class HeroDetailComponent implements OnInit {
 
     hero: Hero;
-    heroIdControl: FormControl;
     heroNameControl: FormControl;
-  
+    heroAgeControl: FormControl;
+    heroClassControl: FormControl;
+    classes: string[] = [ 'Junior', 'Middle', 'Senior' ];
+    
     constructor(
         private route: ActivatedRoute,
         private location: Location,
@@ -31,8 +33,9 @@ export class HeroDetailComponent implements OnInit {
         const id = this.route.snapshot.paramMap.get('id');
         this.heroService.getHero(id).subscribe(hero => {
             this.hero = hero;
-            this.heroIdControl = new FormControl(this.hero._id);
-            this.heroNameControl = new FormControl(this.hero.name, Validators.required);
+            this.heroNameControl = new FormControl(this.hero.name, [Validators.required, Validators.pattern('[a-zA-Z ]*')]);
+            this.heroAgeControl = new FormControl(this.hero.age, [Validators.required]);
+            this.heroClassControl = new FormControl(this.hero.class, [Validators.required]);
         });
     }
 
@@ -41,7 +44,10 @@ export class HeroDetailComponent implements OnInit {
     }
 
     save(): void {
-        var updHero = new Hero(this.heroIdControl.value, this.heroNameControl.value);
+        if (this.heroNameControl.invalid || this.heroAgeControl.invalid) {
+            return;
+        }
+        var updHero = new Hero(this.hero._id, this.heroNameControl.value, this.heroAgeControl.value, this.heroClassControl.value);
         this.heroService.updateHero(updHero).subscribe(() => this.goBack());
     }
 

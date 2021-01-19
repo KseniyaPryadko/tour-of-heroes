@@ -3,36 +3,42 @@
 </div>
 <ng-template #condition>
     <mat-toolbar class="title">My Heroes</mat-toolbar>
-    <mat-form-field appearance="outline">
-        <mat-label>Hero name</mat-label>
-        <input matInput type="text" [formControl]="newControl">
-    </mat-form-field>
-    <button mat-fab (click)="add(newControl.value); newControl.setValue('')" color="primary" aria-label="Add icon button" class="add">
+    <button mat-fab (click)="openAddDialog()" color="primary" aria-label="Add icon button" class="add">
         <mat-icon class="icon">add_box</mat-icon>
     </button>
-    <mat-table #table [dataSource]="heroes">
+    <mat-table #table [dataSource]="dataSource" matSort class="table">
         <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef></th>
+            <th mat-header-cell *matHeaderCellDef>No.</th>
             <td mat-cell *matCellDef="let hero" class="badge">{{heroes.indexOf(hero) + 1}}</td>
         </ng-container>
         
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef></th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="name">Name</th>
             <td mat-cell *matCellDef="let hero">
-                <a mat-button routerLink="/detail/{{hero._id}}">{{hero.name}}</a>
+                <a mat-button routerLink="/detail/{{hero._id}}">{{hero.name}} </a>
             </td>
+        </ng-container>
+
+        <ng-container matColumnDef="age">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="age">Age (y.o.)</th>
+            <td mat-cell *matCellDef="let hero"><pre> {{hero.age}} </pre></td>
+        </ng-container>
+
+        <ng-container matColumnDef="class">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="class">Class</th>
+            <td mat-cell *matCellDef="let hero"><pre> {{hero.class}} </pre></td>
         </ng-container>
 
         <ng-container matColumnDef="button">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let hero">
-                <button mat-icon-button (click)="openDialog(hero)" color="warn" area-label="Delete icon button" class="delete">
+                <button mat-icon-button (click)="openDeleteDialog(hero)" color="warn" area-label="Delete icon button" class="delete">
                     <mat-icon>clear</mat-icon>
                 </button>
             </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="['position', 'name', 'button']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['position', 'name', 'button']"></tr>
+        <tr mat-header-row *matHeaderRowDef="['position', 'name', 'age', 'class', 'button']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['position', 'name', 'age', 'class', 'button']"></tr>
     </mat-table>
 </ng-template>

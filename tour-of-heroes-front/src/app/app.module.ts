@@ -14,10 +14,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeroesComponent, HeroDeleteDialog } from './heroes/heroes.component';
+import { HeroesComponent, HeroDeleteDialog, HeroAddDialog } from './heroes/heroes.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -28,6 +30,7 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
         AppComponent,
         HeroesComponent,
         HeroDeleteDialog,
+        HeroAddDialog,
         HeroDetailComponent,
         MessagesComponent,
         DashboardComponent,
@@ -50,7 +53,9 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
         MatButtonModule,
         MatTableModule,
         MatGridListModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSelectModule,
+        MatSortModule
     ],
     providers: [],
     bootstrap: [AppComponent]

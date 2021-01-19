@@ -26,12 +26,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
         next();
     }
 });
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((_: Request, __: Response, next: NextFunction) => {
     const error = new ServerError('Not found');
     error.status = 404;
     next(error);
 });
-app.use((err: ServerError, req: Request, res: Response, next: NextFunction) => {
+app.use((err: ServerError, _: Request, res: Response, __: NextFunction) => {
     res.status(err.status || 500).json(err);
 });
 

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 const URL = "mongodb+srv://admin:admin@heroes.msjbl.mongodb.net/Heroes?retryWrites=true&w=majority";
 mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true });
-function shutdown(msg, callback) {
+function shutdown(_, callback) {
     mongoose.connection.close(() => callback());
 }
 process.on('SIGINT', () => {

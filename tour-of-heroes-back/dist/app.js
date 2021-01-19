@@ -24,12 +24,12 @@ app.use((req, res, next) => {
         next();
     }
 });
-app.use((req, res, next) => {
+app.use((_, __, next) => {
     const error = new error_1.ServerError('Not found');
     error.status = 404;
     next(error);
 });
-app.use((err, req, res, next) => {
+app.use((err, _, res, __) => {
     res.status(err.status || 500).json(err);
 });
 module.exports = app;

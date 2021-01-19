@@ -3,7 +3,7 @@ require('../db');
 import mongoose = require('mongoose');
 
 import { Request, Response, NextFunction } from 'express';
-import { Hero, HeroDocument } from '../../types/hero';
+import { HeroDocument } from '../../types/hero';
 import { ServerError } from '../../types/error';
 import e = require('express');
 
@@ -33,7 +33,7 @@ export = {
     },
 
     insert: (req: Request, res: Response, _: NextFunction) => {
-        model.create({ name: req.body.name }, (err: ServerError, hero: HeroDocument) => {
+        model.create({ name: req.body.name, age: req.body.age, class: req.body.class }, (err: ServerError, hero: HeroDocument) => {
             if (err) {
                 res.status(400).json(err);
             } else {
@@ -48,6 +48,8 @@ export = {
                 res.status(404).json(err);
             } else if (hero) {
                 hero.name = req.body.name;
+                hero.age = req.body.age;
+                hero.class = req.body.class;
                 hero.save((nestedErr: ServerError, newHero: HeroDocument) => {
                     if (nestedErr) {
                         res.status(409).json(nestedErr);

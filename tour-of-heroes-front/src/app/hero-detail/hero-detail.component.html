@@ -1,17 +1,26 @@
-<div *ngIf="!hero else condition">
+<div *ngIf="!heroClassControl else condition">
     <mat-spinner></mat-spinner>
 </div>
 <ng-template #condition> 
     <fieldset>
         <legend>{{hero.name | uppercase}} Details</legend>
-        <mat-form-field appearance="standard" class="field">
-            <mat-label>id:</mat-label>
-            <input matInput readonly [formControl]="heroIdControl">
-        </mat-form-field>
         <mat-form-field appearence="standard" class="field">
             <mat-label>name:</mat-label>
             <input matInput type="text" [formControl]="heroNameControl">
             <mat-error *ngIf="heroNameControl.invalid">Name cannot be empty!</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard" class="field">
+            <mat-label>age:</mat-label>
+            <input matInput type="number" min="1" [formControl]="heroAgeControl">
+            <mat-error *ngIf="heroAgeControl.invalid">Age cannot be empty!</mat-error>
+        </mat-form-field>
+        <mat-form-field appearence="standard" class="field">
+            <mat-label>class:</mat-label>
+            <mat-select [formControl]="heroClassControl">
+                <mat-option value="Junior">Junior</mat-option>
+                <mat-option value="Middle">Middle</mat-option>
+                <mat-option value="Senior">Senior</mat-option>
+            </mat-select>
         </mat-form-field>
         <section>
             <button (click)="save()" mat-mini-fab color="primary" aria-label="Done icon button">

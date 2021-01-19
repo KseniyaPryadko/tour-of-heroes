@@ -4,7 +4,7 @@ const URL = "mongodb+srv://admin:admin@heroes.msjbl.mongodb.net/Heroes?retryWrit
 
 mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
-function shutdown(msg: String, callback: Function) {
+function shutdown(_: String, callback: Function) {
     mongoose.connection.close(() => callback());
 }
 
