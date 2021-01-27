@@ -1,15 +1,25 @@
-<div *ngIf="!loaded else condition">
+<div *ngIf="!loaded">
     <mat-spinner></mat-spinner>
 </div>
-<ng-template #condition>
+<div>
     <mat-toolbar class="title">My Heroes</mat-toolbar>
+    <mat-form-field appearence="standard" class="filter">
+        <mat-label>Filtering parameter:</mat-label>
+        <input matInput type="text" [formControl]="filterControl">
+    </mat-form-field>
+    <button [disabled]="filterControl.value == ''" mat-fab (click)="filter()" color="accent" aria-label="Filter icon button" class="add">
+        <mat-icon class="icon">search</mat-icon>
+    </button>
+    <button mat-fab (click)="clear()" color="accent" aria-label="Clear filter icon button" class="add">
+        <mat-icon class="icon">clear</mat-icon>
+    </button>
     <button mat-fab (click)="openAddDialog()" color="primary" aria-label="Add icon button" class="add">
         <mat-icon class="icon">add_box</mat-icon>
     </button>
-    <mat-table #table [dataSource]="dataSource" matSort class="table">
+    <mat-table [hidden]="!loaded" [dataSource]="dataSource" matSort class="table">        
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef>No.</th>
-            <td mat-cell *matCellDef="let hero" class="badge">{{heroes.indexOf(hero) + 1}}</td>
+            <td mat-cell *matCellDef="let hero" class="badge"><b>{{heroes.indexOf(hero) + 1}}</b></td>
         </ng-container>
         
         <ng-container matColumnDef="name">
@@ -38,7 +48,16 @@
             </td>
         </ng-container>
 
+        <ng-container matColumnDef="disclaimer">
+            <td mat-footer-cell *matFooterCellDef colspan="5">
+                <div class="footer"><b><i>All the characters are fictional. Any coincidences are accidental.</i></b></div>
+            </td>
+        </ng-container>        
+
         <tr mat-header-row *matHeaderRowDef="['position', 'name', 'age', 'class', 'button']"></tr>
         <tr mat-row *matRowDef="let row; columns: ['position', 'name', 'age', 'class', 'button']"></tr>
+
+        <tr mat-footer-row *matFooterRowDef="['disclaimer']" class="example-second-footer-row"></tr>
     </mat-table>
-</ng-template>
+    <mat-paginator [pageSize]="5" showFirstLastButtons class="paginator"></mat-paginator>
+</div>

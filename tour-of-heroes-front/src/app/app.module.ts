@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -55,6 +56,7 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
         MatGridListModule,
         MatDialogModule,
         MatSelectModule,
+        MatPaginatorModule,
         MatSortModule
     ],
     providers: [],

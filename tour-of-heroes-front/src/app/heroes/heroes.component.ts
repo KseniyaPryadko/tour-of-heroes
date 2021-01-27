@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -12,12 +13,15 @@ import { HeroService } from '../hero.service';
     templateUrl: './heroes.component.html', 
     styleUrls: ['./heroes.component.css']
 })
-export class HeroesComponent implements OnInit, AfterViewInit {
+export class HeroesComponent implements OnInit {
   
     heroes: Hero[] = [];
+    filtered: Hero[] = [];
     loaded = false;
-    dataSource: MatTableDataSource<Hero> = new MatTableDataSource<Hero>(this.heroes);
+    dataSource: MatTableDataSource<Hero>;
+    filterControl = new FormControl('');
 
+    @ViewChild(MatPaginator) matPaginator: MatPaginator;
     @ViewChild(MatSort) matSort: MatSort;
 
     constructor(private heroService: HeroService, public dialog: MatDialog) {} 
@@ -26,13 +30,20 @@ export class HeroesComponent implements OnInit, AfterViewInit {
         this.getHeroes();
     }
 
-    ngAfterViewInit() {
+    refresh() {
+        this.dataSource = new MatTableDataSource<Hero>(this.heroes);
+        this.featured();
+    }
+
+    featured() {
+        this.dataSource.paginator = this.matPaginator;
         this.dataSource.sort = this.matSort;
     }
 
     getHeroes(): void {
         this.heroService.getHeroes().subscribe(heroes => {
             this.heroes.push(...heroes);
+            this.refresh();
             this.loaded = true;
         });
     }
@@ -65,9 +76,10 @@ export class HeroesComponent implements OnInit, AfterViewInit {
     add(name: string, age: number, class_: string): void {
         name = name.trim();
         if (!name) return;
-        this.loaded = false; 
+        this.loaded = false;
         this.heroService.addHero({name: name, age: age, class: class_} as Hero).subscribe(hero => {
             this.heroes.push(hero);
+            this.refresh();
             this.loaded = true;
         });
     }
@@ -75,7 +87,19 @@ export class HeroesComponent implements OnInit, AfterViewInit {
     delete(hero: Hero): void {
         this.loaded = false;
         this.heroes.splice(this.heroes.indexOf(hero), 1);
-        this.heroService.deleteHero(hero).subscribe(_ => this.loaded = true);
+        this.heroService.deleteHero(hero).subscribe(_ => { this.refresh(); this.loaded = true; });
+    }
+
+    filter() {
+        this.filtered = this.heroes.filter(hero => 
+            (hero.name + hero.age + hero.class).toLowerCase().indexOf((this.filterControl.value as string).toLowerCase()) >= 0);
+        this.dataSource = new MatTableDataSource<Hero>(this.filtered);
+        this.featured();
+    }
+
+    clear() {
+        this.filterControl.setValue('');
+        this.refresh();
     }
 
 }
